@@ -8,6 +8,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Quiz educativo para estudantes sobre Scrum, Kanban, XP, Lean e o Manifesto Ágil." },
       { property: "og:title", content: "SprintQuiz — Jogo sobre Métodos Ágeis" },
       { property: "og:description", content: "Teste seus conhecimentos em métodos ágeis com perguntas e explicações." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,

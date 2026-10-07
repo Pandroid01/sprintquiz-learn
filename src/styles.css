@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
-  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-display: var(--app-font-display);
+  --font-sans: var(--app-font-body);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -40,6 +40,8 @@
 }
 
 :root {
+  --app-font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --app-font-body: "IBM Plex Sans", system-ui, sans-serif;
   --radius: 0.5rem;
   --background: oklch(0.965 0.018 85);
   --foreground: oklch(0.2 0.02 260);
@@ -69,6 +71,51 @@
   --ring: oklch(0.64 0.19 35);
   --shadow-hard: 4px 4px 0 0 var(--ink);
   --shadow-hard-sm: 2px 2px 0 0 var(--ink);
+}
+
+:root[data-font="system"] {
+  --app-font-display: Arial, Helvetica, sans-serif;
+  --app-font-body: Arial, Helvetica, sans-serif;
+}
+:root[data-font="serif"] {
+  --app-font-display: Georgia, "Times New Roman", serif;
+  --app-font-body: Georgia, "Times New Roman", serif;
+}
+:root[data-font="mono"] {
+  --app-font-display: "Courier New", monospace;
+  --app-font-body: "Courier New", monospace;
+}
+
+:root.dark {
+  color-scheme: dark;
+  --background: oklch(0.19 0.008 260);
+  --foreground: oklch(0.94 0.008 85);
+  --ink: oklch(0.63 0.015 260);
+  --card: oklch(0.25 0.008 260);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.75 0.16 35);
+  --primary-foreground: oklch(0.19 0.008 260);
+  --secondary: oklch(0.32 0.01 260);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--secondary);
+  --muted-foreground: oklch(0.76 0.01 260);
+  --accent: oklch(0.37 0.07 95);
+  --accent-foreground: var(--foreground);
+  --note: oklch(0.37 0.07 95);
+  --note-blue: oklch(0.36 0.06 230);
+  --note-pink: oklch(0.36 0.06 10);
+  --note-green: oklch(0.36 0.06 150);
+  --border: var(--ink);
+  --input: var(--ink);
+  --ring: var(--primary);
+  --shadow-hard: 4px 4px 0 0 oklch(0.1 0.005 260);
+  --shadow-hard-sm: 2px 2px 0 0 oklch(0.1 0.005 260);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pop { animation: none; }
 }
 
 @utility shadow-hard {

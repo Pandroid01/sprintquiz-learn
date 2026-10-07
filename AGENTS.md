@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep appearance state in the shared AppearanceProvider and apply it through global CSS tokens so every page uses the same theme and fonts.
+- Store device-only appearance preferences in browser storage after hydration; these presentation settings do not require accounts or Cloud.

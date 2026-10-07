@@ -8,6 +8,8 @@ export const Route = createFileRoute("/aprenda")({
       { name: "description", content: "Resumo didático do Manifesto Ágil, Scrum, Kanban, XP e Lean para estudantes." },
       { property: "og:title", content: "Aprenda Métodos Ágeis — SprintQuiz" },
       { property: "og:description", content: "Guia rápido de Scrum, Kanban, XP e Lean." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Aprenda,
