@@ -10,6 +10,8 @@ export const Route = createFileRoute("/quiz")({
       { name: "description", content: "Responda perguntas sobre métodos ágeis e acompanhe sua pontuação." },
       { property: "og:title", content: "Jogar — SprintQuiz" },
       { property: "og:description", content: "Quiz de métodos ágeis com explicações a cada resposta." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: QuizPage,
