@@ -32,7 +32,7 @@ function Index() {
             Jogo educativo
           </span>
           <h1 className="mt-5 text-5xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
-            Domine os <span className="text-primary">métodos ágeis</span> jogando.
+            Domine os <span className="text-estacio">métodos ágeis</span> jogando.
           </h1>
           <p className="mt-5 text-lg text-muted-foreground">
             20 perguntas sobre Scrum, Kanban, XP, Lean e o Manifesto Ágil. Cada resposta vem com uma explicação para você aprender de verdade.
