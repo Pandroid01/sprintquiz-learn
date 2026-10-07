@@ -9,6 +9,7 @@ import {
   type Difficulty,
   type Question,
 } from "@/lib/questions";
+import { saveGame } from "@/lib/history";
 
 export const Route = createFileRoute("/quiz")({
   head: () => ({
@@ -38,6 +39,7 @@ function QuizPage() {
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [best, setBest] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
   const [phase, setPhase] = useState<Phase>("select");
 
   useEffect(() => {
