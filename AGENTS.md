@@ -9,5 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Keep appearance state in the shared AppearanceProvider and apply it through global CSS tokens so every page uses the same theme and fonts.
+- Keep appearance state in the shared AppearanceProvider and apply theme and text size through global CSS tokens so every page scales consistently while preserving the original font families.
 - Store device-only appearance preferences in browser storage after hydration; these presentation settings do not require accounts or Cloud.

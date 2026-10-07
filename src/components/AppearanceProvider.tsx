@@ -1,21 +1,20 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-export type FontChoice = "original" | "system" | "serif" | "mono";
 type Appearance = {
   dark: boolean;
-  font: FontChoice;
+  fontSize: number;
   setDark: (value: boolean) => void;
-  setFont: (value: FontChoice) => void;
+  setFontSize: (value: number) => void;
 };
 const AppearanceContext = createContext<Appearance | null>(null);
 
-export function isFontChoice(value: unknown): value is FontChoice {
-  return value === "original" || value === "system" || value === "serif" || value === "mono";
+function isFontSize(value: unknown): value is number {
+  return value === 14 || value === 16 || value === 18 || value === 20;
 }
 
 export function AppearanceProvider({ children }: { children: ReactNode }) {
   const [dark, setDark] = useState(false);
-  const [font, setFont] = useState<FontChoice>("original");
+  const [fontSize, setFontSize] = useState(16);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -23,7 +22,7 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
       const saved = JSON.parse(localStorage.getItem("sprintquiz-appearance") ?? "null");
       if (saved && typeof saved === "object") {
         setDark(saved.dark === true);
-        if (isFontChoice(saved.font)) setFont(saved.font);
+        if (isFontSize(saved.fontSize)) setFontSize(saved.fontSize);
       }
     } catch { /* Keep defaults when browser storage is unavailable. */ }
     setReady(true);
@@ -32,13 +31,14 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!ready) return;
     document.documentElement.classList.toggle("dark", dark);
-    document.documentElement.dataset['font'] = font;
+    delete document.documentElement.dataset['font'];
+    document.documentElement.dataset['fontSize'] = String(fontSize);
     try {
-      localStorage.setItem("sprintquiz-appearance", JSON.stringify({ dark, font }));
+      localStorage.setItem("sprintquiz-appearance", JSON.stringify({ dark, fontSize }));
     } catch { /* Appearance still works without browser storage. */ }
-  }, [dark, font, ready]);
+  }, [dark, fontSize, ready]);
 
-  return <AppearanceContext.Provider value={{ dark, font, setDark, setFont }}>{children}</AppearanceContext.Provider>;
+  return <AppearanceContext.Provider value={{ dark, fontSize, setDark, setFontSize }}>{children}</AppearanceContext.Provider>;
 }
 
 export function useAppearance() {
