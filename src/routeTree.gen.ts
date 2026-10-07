@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AprendaRouteImport } from './routes/aprenda'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
+import { Route as DesempenhoRouteImport } from './routes/desempenho'
 import { Route as QuizRouteImport } from './routes/quiz'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
   path: '/configuracoes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DesempenhoRoute = DesempenhoRouteImport.update({
+  id: '/desempenho',
+  path: '/desempenho',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aprenda': typeof AprendaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/desempenho': typeof DesempenhoRoute
   '/quiz': typeof QuizRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/aprenda': typeof AprendaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/desempenho': typeof DesempenhoRoute
   '/quiz': typeof QuizRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/aprenda': typeof AprendaRoute
   '/configuracoes': typeof ConfiguracoesRoute
+  '/desempenho': typeof DesempenhoRoute
   '/quiz': typeof QuizRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/aprenda' | '/configuracoes' | '/quiz'
+  fullPaths: '/' | '/aprenda' | '/configuracoes' | '/desempenho' | '/quiz'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/aprenda' | '/configuracoes' | '/quiz'
-  id: '__root__' | '/' | '/aprenda' | '/configuracoes' | '/quiz'
+  to: '/' | '/aprenda' | '/configuracoes' | '/desempenho' | '/quiz'
+  id: '__root__' | '/' | '/aprenda' | '/configuracoes' | '/desempenho' | '/quiz'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AprendaRoute: typeof AprendaRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
+  DesempenhoRoute: typeof DesempenhoRoute
   QuizRoute: typeof QuizRoute
 }
 
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfiguracoesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/desempenho': {
+      id: '/desempenho'
+      path: '/desempenho'
+      fullPath: '/desempenho'
+      preLoaderRoute: typeof DesempenhoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quiz': {
       id: '/quiz'
       path: '/quiz'
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AprendaRoute: AprendaRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
+  DesempenhoRoute: DesempenhoRoute,
   QuizRoute: QuizRoute,
 }
 export const routeTree = rootRouteImport

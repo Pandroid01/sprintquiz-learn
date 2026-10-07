@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Settings } from "lucide-react";
+import { BarChart3, Settings } from "lucide-react";
 
 export function SiteHeader() {
   const link = "px-3 py-1.5 rounded-md font-medium hover:bg-secondary";
@@ -14,6 +14,7 @@ export function SiteHeader() {
           <Link to="/" className={link} activeProps={active} activeOptions={{ exact: true }}>Início</Link>
           <Link to="/quiz" className={link} activeProps={active}>Jogar</Link>
           <Link to="/aprenda" className={link} activeProps={active}>Aprenda</Link>
+          <Link to="/desempenho" className={`${link} inline-flex items-center gap-2`} activeProps={active}><BarChart3 className="h-4 w-4" aria-hidden="true" />Desempenho</Link>
           <Link to="/configuracoes" className={`${link} inline-flex items-center gap-2`} activeProps={active}><Settings className="h-4 w-4" aria-hidden="true" />Configurações</Link>
         </nav>
       </div>
