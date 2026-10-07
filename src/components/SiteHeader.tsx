@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Settings } from "lucide-react";
+import { BarChart3, Settings } from "lucide-react";
 
 export function SiteHeader() {
   const link = "px-3 py-1.5 rounded-md font-medium hover:bg-secondary";
