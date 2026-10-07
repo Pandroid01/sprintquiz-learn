@@ -51,7 +51,7 @@ function QuizPage() {
 
   function start(d: Difficulty) {
     setDifficulty(d);
-    setQs(shuffle(questionsByDifficulty(d)));
+    setQs(shuffle(questionsByDifficulty(d)).slice(0, 10));
     setI(0); setPicked(null); setScore(0); setStreak(0); setCorrectCount(0);
     setPhase("playing");
   }
