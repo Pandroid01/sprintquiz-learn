@@ -73,18 +73,10 @@
   --shadow-hard-sm: 2px 2px 0 0 var(--ink);
 }
 
-:root[data-font="system"] {
-  --app-font-display: Arial, Helvetica, sans-serif;
-  --app-font-body: Arial, Helvetica, sans-serif;
-}
-:root[data-font="serif"] {
-  --app-font-display: Georgia, "Times New Roman", serif;
-  --app-font-body: Georgia, "Times New Roman", serif;
-}
-:root[data-font="mono"] {
-  --app-font-display: "Courier New", monospace;
-  --app-font-body: "Courier New", monospace;
-}
+:root { --app-text-size: 100%; font-size: var(--app-text-size); }
+:root[data-font-size="14"] { --app-text-size: 87.5%; }
+:root[data-font-size="18"] { --app-text-size: 112.5%; }
+:root[data-font-size="20"] { --app-text-size: 125%; }
 
 :root.dark {
   color-scheme: dark;
