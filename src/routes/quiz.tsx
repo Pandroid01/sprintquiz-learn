@@ -1,7 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
-import { QUESTIONS, shuffle, type Question } from "@/lib/questions";
+import {
+  DIFFICULTY_LABELS,
+  DIFFICULTY_POINTS,
+  questionsByDifficulty,
+  shuffle,
+  type Difficulty,
+  type Question,
+} from "@/lib/questions";
 
 export const Route = createFileRoute("/quiz")({
   head: () => ({
@@ -17,29 +24,41 @@ export const Route = createFileRoute("/quiz")({
   component: QuizPage,
 });
 
-type Phase = "playing" | "done";
+type Phase = "select" | "playing" | "done";
+
+function bestKey(d: Difficulty) {
+  return `sprintquiz-best-${d}`;
+}
 
 function QuizPage() {
-  const [qs, setQs] = useState<Question[]>(QUESTIONS);
+  const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
+  const [qs, setQs] = useState<Question[]>([]);
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [best, setBest] = useState(0);
-  const [phase, setPhase] = useState<Phase>("playing");
+  const [phase, setPhase] = useState<Phase>("select");
 
   useEffect(() => {
-    setQs(shuffle(QUESTIONS));
-    setBest(Number(localStorage.getItem("sprintquiz-best") ?? 0));
-  }, []);
+    if (difficulty) setBest(Number(localStorage.getItem(bestKey(difficulty)) ?? 0));
+  }, [difficulty]);
 
-  const q = qs[i] ?? QUESTIONS[0]!;
+  const q = qs[i] ?? questionsByDifficulty("facil")[0]!;
+  const basePoints = difficulty ? DIFFICULTY_POINTS[difficulty] : 10;
+
+  function start(d: Difficulty) {
+    setDifficulty(d);
+    setQs(shuffle(questionsByDifficulty(d)));
+    setI(0); setPicked(null); setScore(0); setStreak(0);
+    setPhase("playing");
+  }
 
   function choose(idx: number) {
     if (picked !== null) return;
     setPicked(idx);
     if (idx === q.answer) {
-      const bonus = streak >= 2 ? 15 : 10;
+      const bonus = streak >= 2 ? basePoints + 5 : basePoints;
       setScore((s) => s + bonus);
       setStreak((s) => s + 1);
     } else setStreak(0);
@@ -47,8 +66,8 @@ function QuizPage() {
 
   function next() {
     if (i + 1 >= qs.length) {
-      if (score > best) {
-        localStorage.setItem("sprintquiz-best", String(score));
+      if (difficulty && score > best) {
+        localStorage.setItem(bestKey(difficulty), String(score));
         setBest(score);
       }
       setPhase("done");
@@ -58,19 +77,19 @@ function QuizPage() {
     }
   }
 
-  function restart() {
-    setQs(shuffle(QUESTIONS));
-    setI(0); setPicked(null); setScore(0); setStreak(0); setPhase("playing");
-  }
-
   return (
     <div className="min-h-screen bg-grid">
       <SiteHeader />
       <main className="mx-auto max-w-2xl px-4 py-10">
-        {phase === "playing" ? (
+        {phase === "select" && <DifficultySelect onStart={start} />}
+
+        {phase === "playing" && difficulty && (
           <>
             <div className="mb-4 flex items-center justify-between text-sm font-bold">
-              <span>Pergunta {i + 1}/{qs.length}</span>
+              <span>
+                Pergunta {i + 1}/{qs.length}
+                <span className="ml-2 rounded border-2 border-ink bg-note px-2 py-0.5 text-xs">{DIFFICULTY_LABELS[difficulty]}</span>
+              </span>
               <span className="flex gap-3">
                 {streak >= 2 && <span className="rounded border-2 border-ink bg-note-pink px-2">🔥 {streak}</span>}
                 <span className="rounded border-2 border-ink bg-accent px-2">{score} pts</span>
@@ -118,29 +137,79 @@ function QuizPage() {
               )}
             </div>
           </>
-        ) : (
-          <Result score={score} best={best} total={qs.length} onRestart={restart} />
+        )}
+
+        {phase === "done" && difficulty && (
+          <Result
+            score={score}
+            best={best}
+            total={qs.length}
+            difficulty={difficulty}
+            onRestart={() => start(difficulty)}
+            onChangeLevel={() => setPhase("select")}
+          />
         )}
       </main>
     </div>
   );
 }
 
-function Result({ score, best, total, onRestart }: { score: number; best: number; total: number; onRestart: () => void }) {
-  const max = total * 10;
+function DifficultySelect({ onStart }: { onStart: (d: Difficulty) => void }) {
+  const options: { d: Difficulty; desc: string; emoji: string }[] = [
+    { d: "facil", desc: "Conceitos básicos para começar a aquecer.", emoji: "★" },
+    { d: "medio", desc: "Para quem já conhece o básico dos métodos ágeis.", emoji: "★★" },
+    { d: "dificil", desc: "Perguntas avançadas para agilistas experientes.", emoji: "★★★" },
+  ];
+  return (
+    <div className="animate-pop rounded-lg border-2 border-ink bg-card p-8 shadow-hard">
+      <h1 className="text-center text-3xl font-extrabold">Escolha a dificuldade</h1>
+      <p className="mt-2 text-center text-muted-foreground">10 perguntas por partida. Níveis maiores valem mais pontos!</p>
+      <div className="mt-8 grid gap-4">
+        {options.map(({ d, desc, emoji }) => (
+          <button
+            key={d}
+            onClick={() => onStart(d)}
+            className="btn-ink flex items-center gap-4 rounded-lg border-2 border-ink bg-note px-5 py-4 text-left"
+          >
+            <span className="text-3xl">{emoji}</span>
+            <span className="flex-1">
+              <span className="block font-display text-xl font-bold">{DIFFICULTY_LABELS[d]}</span>
+              <span className="block text-sm text-muted-foreground">{desc}</span>
+            </span>
+            <span className="rounded border-2 border-ink bg-accent px-2 py-1 text-sm font-bold">{DIFFICULTY_POINTS[d]} pts/acerto</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Result({ score, best, total, difficulty, onRestart, onChangeLevel }: {
+  score: number;
+  best: number;
+  total: number;
+  difficulty: Difficulty;
+  onRestart: () => void;
+  onChangeLevel: () => void;
+}) {
+  const max = total * (DIFFICULTY_POINTS[difficulty] + 5);
   const pct = Math.min(100, Math.round((score / max) * 100));
   const msg = pct >= 80 ? "Agilista nível sênior! 🚀" : pct >= 50 ? "Bom ritmo de sprint! Continue melhorando." : "Hora de uma retrospectiva — estude e tente de novo.";
   return (
     <div className="animate-pop rounded-lg border-2 border-ink bg-card p-8 text-center shadow-hard">
       <h2 className="text-3xl font-extrabold">Fim da Sprint!</h2>
+      <p className="mt-1 text-sm font-bold text-muted-foreground">Nível {DIFFICULTY_LABELS[difficulty]}</p>
       <div className="mx-auto mt-6 w-fit -rotate-2 rounded-sm border-2 border-ink bg-note px-8 py-6 shadow-hard">
         <div className="font-display text-6xl font-extrabold">{score}</div>
         <div className="text-sm font-bold">pontos</div>
       </div>
       <p className="mt-6 text-lg">{msg}</p>
-      <p className="mt-1 text-sm text-muted-foreground">Recorde: {Math.max(best, score)} pts · Sequências de 3+ acertos valem 15 pts</p>
-      <div className="mt-8 flex justify-center gap-4">
+      <p className="mt-1 text-sm text-muted-foreground">
+        Recorde no nível {DIFFICULTY_LABELS[difficulty]}: {Math.max(best, score)} pts · Sequências de 3+ acertos valem +5 pts
+      </p>
+      <div className="mt-8 flex flex-wrap justify-center gap-4">
         <button onClick={onRestart} className="btn-ink rounded-lg bg-primary px-6 py-3 font-bold text-primary-foreground">Jogar de novo</button>
+        <button onClick={onChangeLevel} className="btn-ink rounded-lg bg-card px-6 py-3 font-bold">Trocar nível</button>
         <Link to="/aprenda" className="btn-ink rounded-lg bg-card px-6 py-3 font-bold">Revisar conteúdo</Link>
       </div>
     </div>
