@@ -140,7 +140,7 @@ function PerformancePage() {
               >
                 <RotateCcw className="h-4 w-4" aria-hidden="true" />Limpar histórico
               </button>
-              <span className="text-xs text-muted-foreground">Mostrando as {history!.length} últimas partidas (máx. 30).</span>
+              <span className="text-xs text-muted-foreground">{history!.length === 1 ? "Mostrando a última partida." : `Mostrando as ${history!.length} últimas partidas (máx. 30).`}</span>
             </div>
           </>
         )}
