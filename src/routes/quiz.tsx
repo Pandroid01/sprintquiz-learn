@@ -156,9 +156,9 @@ function QuizPage() {
 
 function DifficultySelect({ onStart }: { onStart: (d: Difficulty) => void }) {
   const options: { d: Difficulty; desc: string; emoji: string }[] = [
-    { d: "facil", desc: "Conceitos básicos para começar a aquecer.", emoji: "🌱" },
-    { d: "medio", desc: "Para quem já conhece o básico dos métodos ágeis.", emoji: "⚡" },
-    { d: "dificil", desc: "Perguntas avançadas para agilistas experientes.", emoji: "🔥" },
+    { d: "facil", desc: "Conceitos básicos para começar a aquecer.", emoji: "★" },
+    { d: "medio", desc: "Para quem já conhece o básico dos métodos ágeis.", emoji: "★★" },
+    { d: "dificil", desc: "Perguntas avançadas para agilistas experientes.", emoji: "★★★" },
   ];
   return (
     <div className="animate-pop rounded-lg border-2 border-ink bg-card p-8 shadow-hard">
