@@ -34,6 +34,7 @@
   --color-note-pink: var(--note-pink);
   --color-note-green: var(--note-green);
   --color-ink: var(--ink);
+  --color-estacio: var(--estacio);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -46,6 +47,7 @@
   --background: oklch(0.965 0.018 85);
   --foreground: oklch(0.2 0.02 260);
   --ink: oklch(0.2 0.02 260);
+  --estacio: #38A2BC;
   --card: oklch(0.99 0.006 85);
   --card-foreground: oklch(0.2 0.02 260);
   --popover: oklch(0.99 0.006 85);
@@ -83,6 +85,7 @@
   --background: oklch(0.19 0.008 260);
   --foreground: oklch(0.94 0.008 85);
   --ink: oklch(0.63 0.015 260);
+  --estacio: #3BAEC9;
   --card: oklch(0.25 0.008 260);
   --card-foreground: var(--foreground);
   --popover: var(--card);
