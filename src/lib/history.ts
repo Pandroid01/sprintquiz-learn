@@ -46,11 +46,11 @@ function isRecord(value: unknown): value is GameRecord {
   if (typeof value !== "object" || value === null) return false;
   const r = value as Record<string, unknown>;
   return (
-    typeof r.date === "string" &&
-    (r.difficulty === "facil" || r.difficulty === "medio" || r.difficulty === "dificil") &&
-    typeof r.score === "number" &&
-    typeof r.correct === "number" &&
-    typeof r.total === "number"
+    typeof r["date"] === "string" &&
+    (r["difficulty"] === "facil" || r["difficulty"] === "medio" || r["difficulty"] === "dificil") &&
+    typeof r["score"] === "number" &&
+    typeof r["correct"] === "number" &&
+    typeof r["total"] === "number"
   );
 }
 
