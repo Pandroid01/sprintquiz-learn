@@ -52,7 +52,7 @@ function QuizPage() {
   function start(d: Difficulty) {
     setDifficulty(d);
     setQs(shuffle(questionsByDifficulty(d)));
-    setI(0); setPicked(null); setScore(0); setStreak(0);
+    setI(0); setPicked(null); setScore(0); setStreak(0); setCorrectCount(0);
     setPhase("playing");
   }
 
@@ -63,6 +63,7 @@ function QuizPage() {
       const bonus = streak >= 2 ? basePoints + 5 : basePoints;
       setScore((s) => s + bonus);
       setStreak((s) => s + 1);
+      setCorrectCount((c) => c + 1);
     } else setStreak(0);
   }
 
@@ -71,6 +72,9 @@ function QuizPage() {
       if (difficulty && score > best) {
         localStorage.setItem(bestKey(difficulty), String(score));
         setBest(score);
+      }
+      if (difficulty) {
+        saveGame({ date: new Date().toISOString(), difficulty, score, correct: correctCount, total: qs.length });
       }
       setPhase("done");
     } else {
