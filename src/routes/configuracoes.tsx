@@ -37,7 +37,7 @@ function SettingsPage() {
                 <span>{fontSize === 14 ? "Pequeno" : fontSize === 16 ? "Padrão" : fontSize === 18 ? "Grande" : "Extra grande"}</span>
                 <output aria-live="polite">{Math.round(fontSize / 16 * 100)}%</output>
               </div>
-              <Slider aria-labelledby="font-size-label" min={14} max={20} step={2} value={[fontSize]} onValueChange={([value]) => { if (value !== undefined) setFontSize(value); }} className="h-6" />
+              <Slider thumbLabel="Tamanho da fonte" min={14} max={20} step={2} value={[fontSize]} onValueChange={([value]) => { if (value !== undefined) setFontSize(value); }} className="h-6" />
             </div>
           </div>
         </section>
