@@ -31,7 +31,7 @@ function QuizPage() {
     setBest(Number(localStorage.getItem("sprintquiz-best") ?? 0));
   }, []);
 
-  const q = qs[i];
+  const q = qs[i] ?? QUESTIONS[0]!;
 
   function choose(idx: number) {
     if (picked !== null) return;
