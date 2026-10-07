@@ -11,3 +11,4 @@
 
 - Keep appearance state in the shared AppearanceProvider and apply theme and text size through global CSS tokens so every page scales consistently while preserving the original font families.
 - Store device-only appearance preferences in browser storage after hydration; these presentation settings do not require accounts or Cloud.
+- Select 10 questions from a shuffled difficulty pool per game, keeping the question bank independent of session length so additions increase replay variety.

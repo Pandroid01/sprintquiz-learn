@@ -35,7 +35,7 @@ function Index() {
             Domine os <span className="text-estacio">métodos ágeis</span> jogando.
           </h1>
           <p className="mt-5 text-lg text-muted-foreground">
-            20 perguntas sobre Scrum, Kanban, XP, Lean e o Manifesto Ágil. Cada resposta vem com uma explicação para você aprender de verdade.
+            Perguntas sobre Scrum, Kanban, XP, Lean e o Manifesto Ágil. Cada resposta vem com uma explicação para você aprender de verdade.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link to="/quiz" className="btn-ink rounded-lg bg-primary px-6 py-3 font-bold text-primary-foreground">
