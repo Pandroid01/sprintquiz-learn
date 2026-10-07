@@ -32,7 +32,7 @@ export function AppearanceProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!ready) return;
     document.documentElement.classList.toggle("dark", dark);
-    document.documentElement.dataset.font = font;
+    document.documentElement.dataset['font'] = font;
     try {
       localStorage.setItem("sprintquiz-appearance", JSON.stringify({ dark, font }));
     } catch { /* Appearance still works without browser storage. */ }
