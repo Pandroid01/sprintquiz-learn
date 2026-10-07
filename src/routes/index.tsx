@@ -1,24 +1,62 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "SprintQuiz — Jogo sobre Métodos Ágeis" },
+      { name: "description", content: "Quiz educativo para estudantes sobre Scrum, Kanban, XP, Lean e o Manifesto Ágil." },
+      { property: "og:title", content: "SprintQuiz — Jogo sobre Métodos Ágeis" },
+      { property: "og:description", content: "Teste seus conhecimentos em métodos ágeis com perguntas e explicações." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const notes = [
+  { t: "Scrum", c: "bg-note", r: "-rotate-3" },
+  { t: "Kanban", c: "bg-note-blue", r: "rotate-2" },
+  { t: "XP", c: "bg-note-pink", r: "-rotate-1" },
+  { t: "Lean", c: "bg-note-green", r: "rotate-3" },
+];
+
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-grid">
+      <SiteHeader />
+      <main className="mx-auto grid max-w-5xl items-center gap-12 px-4 py-16 md:grid-cols-2">
+        <div className="animate-pop">
+          <span className="inline-block rounded-full border-2 border-ink bg-accent px-3 py-1 text-xs font-bold uppercase tracking-wider">
+            Jogo educativo
+          </span>
+          <h1 className="mt-5 text-5xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
+            Domine os <span className="text-primary">métodos ágeis</span> jogando.
+          </h1>
+          <p className="mt-5 text-lg text-muted-foreground">
+            20 perguntas sobre Scrum, Kanban, XP, Lean e o Manifesto Ágil. Cada resposta vem com uma explicação para você aprender de verdade.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link to="/quiz" className="btn-ink rounded-lg bg-primary px-6 py-3 font-bold text-primary-foreground">
+              Começar o quiz →
+            </Link>
+            <Link to="/aprenda" className="btn-ink rounded-lg bg-card px-6 py-3 font-bold">
+              Estudar antes
+            </Link>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-6">
+          {notes.map((n, i) => (
+            <div
+              key={n.t}
+              className={`${n.c} ${n.r} animate-pop aspect-square rounded-sm border-2 border-ink p-5 shadow-hard`}
+              style={{ animationDelay: `${i * 90}ms` }}
+            >
+              <div className="font-display text-2xl font-extrabold">{n.t}</div>
+              <div className="mt-2 h-1.5 w-10 bg-ink" />
+            </div>
+          ))}
+        </div>
+      </main>
     </div>
   );
 }
