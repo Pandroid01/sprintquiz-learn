@@ -1,5 +1,6 @@
 # SprintQuiz
-
+Atividade da Materia de Engenharia de Software,
+Bernardo Rocha Costa, matricula 202503851794
 Um web game sobre metodos ageis, feito por Ia para uso conceitual
 
 This project was built with [Lovable](https://lovable.dev).
