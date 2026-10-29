@@ -1,6 +1,6 @@
 # SprintQuiz
 
-Olá eu preciso de um web game sobre metodos ageis com documentação
+Um web game sobre metodos ageis, feito por Ia para uso conceitual
 
 This project was built with [Lovable](https://lovable.dev).
 
